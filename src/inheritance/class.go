@@ -14,9 +14,26 @@ type FullTimeEmployee struct {
 	Person
 	Employee
 }
+type TemporaryEmployee struct {
+	Person
+	Employee
+	taxRate int
+}
 
-func GetMessage(p Person) {
-	fmt.Printf("%s with age %d\n", p.name, p.age)
+//interface
+type PrintInfo interface {
+	getMessage() string
+}
+
+func (ftEmployee FullTimeEmployee) getMessage() string {
+	return "Full Time Employee"
+}
+func (tempEmployee TemporaryEmployee) getMessage() string {
+	return "Temporary Time Employee"
+}
+
+func getMessage(p PrintInfo) {
+	fmt.Println(p.getMessage())
 }
 func main() {
 	ftEmployee := FullTimeEmployee{}
@@ -24,7 +41,13 @@ func main() {
 	ftEmployee.age = 14
 	ftEmployee.id = 1234
 	fmt.Println(ftEmployee)
+	tempEmployee := TemporaryEmployee{}
+	tempEmployee.name = "Camilo"
+	tempEmployee.age = 33
+	tempEmployee.id = 4321
+	fmt.Println(tempEmployee)
 	// isn't allowed to make polimorphism directly,
 	// we should use intefaces
-	//GetMessage(ftEmployee)
+	getMessage(ftEmployee)
+	getMessage(tempEmployee)
 }
